@@ -1,22 +1,25 @@
 # Basic class structures for item, eq, player relation
 import secrets
+from dataclasses import dataclass, field
 
+@dataclass
 class Item:
-    def __init__(self, lvl : int, prof : str, atype : str, name : str, stats : dict):
-        self.id = f'{name}-{atype}-{lvl}-{prof}'
-        self.lvl = lvl
-        self.prof = prof
-        self.atype = atype
-        self.name = name
-        self.stats = stats
-        
-    def toList(self):
+    lvl: int
+    prof: str
+    atype: str
+    name: str
+    stats: dict
+    
+    def __repr__(self):
+        return f'{self.lvl}-{self.prof}-{self.atype}-{self.name}'
+    
+    def to_list(self):
         return [self.lvl, self.prof, self.atype, self.name, self.stats]
-        
-class Eq(Item):
-    def __init__(self):
-        self.items = []
-        self.stats = {}
+
+@dataclass
+class Eq:
+    items: list = field(default_factory=lambda : [])
+    stats: dict = field(default_factory=lambda : {})
         
     def check(self, item : Item):
         # Check compatibility of classes with 1st item in eq
@@ -47,22 +50,27 @@ class Eq(Item):
                     if self.stats[key] == 0:
                         del self.stats[key]
 
-class Player:
-    def __init__(self, lvl : int, prof : str, eq_stats : dict, um_stats: dict):
-        self.id = secrets.token_hex(16)
-        self.proffesion = prof
-        self.eq_stats = eq_stats
+@dataclass
+class Player:   
+    idx: str = field(init=False)
+    lvl: int
+    proffesion: str
+    eq_stats: dict
+    um_stats: dict
         
+    def __post_init__(self):
+        self.idx = secrets.token_hex(16)
+    
+    @staticmethod
     def getStats(lvl : int):
         pass
-    
+
+@dataclass    
 class FightSimulator:
-    def __init__(self, players : list):
-        self.players = players
-        
+    players: list = field(default_factory=lambda : [])
+    
     @staticmethod
     def fightSimulator(p1, p2):
-    
         initial_stats = []
         updatibles = []
         final_stats = []
