@@ -19,7 +19,7 @@ Project is being built in spare time, however its content has:
 ## Future Plans
 Although project is at very early stage, the further plans are:
 - ANN build to improve eq matching
-- Web app along wih user interface
+- Web app along with user interface
 
 ## Technologies &amp; frameworks
 - Python
