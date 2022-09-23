@@ -1,7 +1,9 @@
 from math import floor
 
+# BASE features assignment from very start
 
-def get_all_features(lvl: int, prof: str):
+
+def get_base_features(lvl: int, prof: str):
 
     def h_stats(lvl: int, base: dict):
         for _ in range(2, 21):
@@ -86,17 +88,70 @@ def get_all_features(lvl: int, prof: str):
 
     return prof_to_f[prof](lvl, base_f)
 
+# Other statistics derived from 'BASE'
 
-def get_attack_speed(agility: int, eq_as: int):
+
+def get_base_attack_speed(agility: int):
     base_sa = 100
     if agility < 101:
         base_sa += agility * 2
     else:
         base_sa += 100 * 2
         base_sa += (agility - 100) * 0.2
-    base_sa += eq_as
-    return float(base_sa / 100)
+    return round(base_sa)
 
 
-def get_health_points(lvl: int):
-    return floor(20 * pow(lvl, 1.375))
+def get_base_health_points(lvl: int, strength: int):
+    return floor(20 * pow(lvl, 1.375)) + (strength * 5)
+
+
+def get_base_dodge_points(agility: int):
+    return round(agility / 30)
+
+
+def get_base_crit_chance(lvl: int):
+    return 1.0 + (lvl * 0.02)
+
+
+def get_base_physical_crit(lvl: int, strength: int):
+    return 120 + round(strength / (0.5 * lvl))
+
+
+def get_base_magical_crit(lvl: int, intellect: int):
+    return 120 + round(intellect / (0.5 * lvl))
+
+# Stats getter aggregator
+
+
+def get_all_params(lvl: int, l_stats: dict):
+
+    params = (
+        'crit_strike',
+        'attack_speed',
+        'health_points',
+        'dodge',
+        'physical_crit',
+        'magical_crit'
+    )
+
+    stats_result = (
+        get_base_crit_chance(lvl),
+        get_base_attack_speed(l_stats['agility']),
+        get_base_health_points(lvl, l_stats['strength']),
+        get_base_dodge_points(l_stats['agility']),
+        get_base_physical_crit(lvl, l_stats['strength']),
+        get_base_physical_crit(lvl, l_stats['intellect'])
+    )
+
+    for idx in range(len(params)):
+        if params[idx] in l_stats:
+            l_stats[params[idx]] += stats_result[idx]
+        else:
+            l_stats[params[idx]] = stats_result[idx]
+
+    # Adding hp from p/w stat 'strength_hp'
+    if 'strength_hp' in l_stats:
+        l_stats['health_points'] += \
+            round(l_stats['strength_hp'] * l_stats['strength'])
+
+    return l_stats
