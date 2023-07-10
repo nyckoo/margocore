@@ -1,9 +1,8 @@
 from abc import ABC, abstractmethod
-from game_logic.structures.eq_builder import Eq
 
 
-class ProfessionPattern(ABC):
-    def __init__(self, lvl: int, eq: Eq):
+class ProfessionManagerPattern(ABC):
+    def __init__(self, lvl: int, eq: dict[str, int]):
         self.lvl = lvl
         self.eq = eq
 
@@ -18,9 +17,5 @@ class ProfessionPattern(ABC):
         raise NotImplementedError("Profession field has to be defined!")
 
     @abstractmethod
-    def get_base_features(self) -> None:
-        pass
-
-    @abstractmethod
-    def get_abs_tree_abilities(self) -> None:
+    def load_base_features(self) -> None:
         pass
