@@ -1,8 +1,9 @@
 from dataclasses import dataclass
+from game_logic.professions_formulas.profession_abs_tree_pattern import ProfessionAbsTreePattern
 
 
 @dataclass(frozen=True)
-class HunterAbsTree:
+class HunterTree(ProfessionAbsTreePattern):
     blueprint = {
         25: ('swift_arrow', 'double_arrow', 'poisoned_arrow', 'ripping_arrow', 'vigor_enhancement', 'physical_fitness'),
         35: ('double_breath', 'surprise_arrow', 'critical_hit', 'free_dodge', 'exhaustive_arrow', 'crushing_arrow'),
@@ -90,6 +91,10 @@ class HunterAbsTree:
             'features': ['attack_speed_increase']
         }
     }
+
+    lvl: int
+    eq_stats: dict[str, int]
+    abs_set: dict[str, int]
 
     # get loaded abs & return to features, battle stats
     def assign_to_categories(self, character_abilities_set: dict):

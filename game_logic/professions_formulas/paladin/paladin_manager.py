@@ -1,24 +1,21 @@
-from game_logic.professions_formulas.profession_manager_pattern import ProfessionPattern
-from game_logic.structures.eq_builder import Eq
+from game_logic.professions_formulas.profession_manager_pattern import ProfessionManagerPattern
+from game_logic.professions_formulas.stats_creation_applier import StatsCreationApplier
+from game_logic.professions_formulas.paladin.paladin_tree import PaladinTree
 
 
-class PaladinManager(ProfessionPattern):
+class PaladinManager(ProfessionManagerPattern):
     base_stats = {'strength': 4, 'agility': 3, 'intellect': 3}
     profession = 'paladin'
 
-    def __init__(self, lvl: int, eq: Eq):
-        super().__init__(lvl, eq)
+    def __init__(self, lvl: int, eq_stats: dict[str, int], abs_set: dict[str, int]):
+        super().__init__(lvl, eq_stats)
+        self.stats_creation_applier = StatsCreationApplier()
+        self.abs_tree = PaladinTree(lvl, eq_stats, abs_set)
 
-    def get_base_features(self):
-        # small tweak from standard approach because of half values
-        self.base_stats['strength'] += 2
-        self.base_stats['agility'] += 1
-        self.base_stats['intellect'] += 2
-        # step 2 to avoid floats
-        for _ in range(3, 21, 2):
-            self.base_stats['strength'] += 5
-            self.base_stats['agility'] += 1
-            self.base_stats['intellect'] += 4
+    def load_base_features(self):
+        self.base_stats['strength'] += 47
+        self.base_stats['agility'] += 10
+        self.base_stats['intellect'] += 38
         for i in range(21, self.lvl + 1):
             if i % 2 == 0:
                 self.base_stats['strength'] += 2
