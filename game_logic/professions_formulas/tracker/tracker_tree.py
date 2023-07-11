@@ -12,7 +12,7 @@ class TrackerTree(ProfessionAbsTreePattern):
         80: ('critical_buff', 'emanating_arrow', 'survival', 'fire_power', 'light_power', 'frost_power'),
         120: ('stinky_bolt', 'armor_buff', 'power_regain', 'callousness', 'finish_attack', 'elemental_protection'),
         170: ('energizing_shock', 'power_durability', 'frost_immunity', 'rapid_arrow', 'fire_immunity', 'light_immunity'),
-        230: ('mystical_arrow', 'fear', 'extra_health', 'extra_armor', 'might_source', 'item_enchantment')
+        230: ('mystical_arrow', 'fear', 'great_health', 'extra_armor', 'might_source', 'items_enchantment')
     }
 
     translator = {
@@ -74,7 +74,8 @@ class TrackerTree(ProfessionAbsTreePattern):
 
     # get loaded abs & return to features, battle stats
     def assign_to_stats_and_features(self):
-        ...
+        for skill, points in self.abs_set.items():
+            pass
 
     def _apply_skill_frost_arrow(self):
         points = self.abs_set['frost_arrow']
