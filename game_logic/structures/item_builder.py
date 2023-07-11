@@ -12,10 +12,10 @@ class Item:
     stats: dict
 
     def __post_init__(self):
-        self.stats = self._parse_raw_types()
+        self.stats = self.parse_raw_types()
 
     # These stats are handled as if they were scraped
-    def _parse_raw_types(self):
+    def parse_raw_types(self):
         parsed_stats = {}
         for key, val in self.stats.items():
             if AllStats.main[key] is int:

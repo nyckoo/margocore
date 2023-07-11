@@ -9,7 +9,7 @@ class Eq:
     bonuses: dict[str, int] = field(default_factory=lambda: {})
     item_to_bonus: dict[Item.name, str] = field(default_factory=lambda: {})
 
-    def check(self, item: Item, proffesion: str):
+    def check(self, item: Item, profession: str):
         # Check compatibility of profs with 1st item in eq
         zipped = set(zip(self.items[0].prof, item.prof))
         for el in zipped:
