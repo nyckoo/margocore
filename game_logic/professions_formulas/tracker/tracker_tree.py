@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 from math import floor
+from typing import Iterator
 from game_logic.professions_formulas.profession_abs_tree_pattern import ProfessionAbsTreePattern
 
 
@@ -70,33 +71,33 @@ class TrackerTree(ProfessionAbsTreePattern):
 
     lvl: int
     eq_stats: dict[str, int]
-    abs_set: dict[str, int]
+    abs_data: dict[str, int]
 
     # get loaded abs & return to features, battle stats
-    def assign_to_stats_and_features(self):
-        for skill, points in self.abs_set.items():
-            pass
+    def create_stats_and_features_generator(self) -> Iterator[tuple[str, dict, dict]]:
+        for skill_name in self.abs_data.keys():
+            yield getattr(self, f"_apply_skill_{skill_name}")()
 
     def _apply_skill_frost_arrow(self):
-        points = self.abs_set['frost_arrow']
+        points = self.abs_data['frost_arrow']
         passive_dmg = round(0.3 * self.eq_stats['intellect'])
         slow = (25 + points * 5)
         freeze = 10 + floor(points / 2)
         mana = 20 + round(.076 * pow(points, 2) + 3.07 * points - 3.4)
-        return {
-            'battle': {
+        return (
+            'frost_arrow',
+            {
                 'frost_slow_2t': slow,
                 'freeze_chance': freeze,
                 'combination_point': 1,
                 'mana_cost': mana
-            },
-            'features': {
+            }, {
                 'frost_dmg': passive_dmg
             }
-        }
+        )
 
     def _apply_skill_light_arrow(self):
-        points = self.abs_set['light_arrow']
+        points = self.abs_data['light_arrow']
         passive_dmg = round(0.3 * self.eq_stats['intellect'])
         light_dmg = (9 + points) / 100
         armor_break = (13 + points) / 100
@@ -114,7 +115,7 @@ class TrackerTree(ProfessionAbsTreePattern):
         }
 
     def _apply_skill_fire_arrow(self):
-        points = self.abs_set['fire_arrow']
+        points = self.abs_data['fire_arrow']
         passive_dmg = round(0.3 * self.eq_stats['intellect'])
         polynomial_approx = round(-.034 * pow(points, 3) + 0.406 * pow(points, 2) + 3.637 * points - 3.833)
         burn_dmg = 15 + polynomial_approx
@@ -134,7 +135,7 @@ class TrackerTree(ProfessionAbsTreePattern):
         }
 
     def _apply_skill_double_arrow(self):
-        points = self.abs_set['double_arrow']
+        points = self.abs_data['double_arrow']
         passive_dmg = round(0.2 * self.eq_stats['agility'])
         attack_decrease = 32 - points * 2
         energy = 30 + points
@@ -150,7 +151,7 @@ class TrackerTree(ProfessionAbsTreePattern):
         }
 
     def _apply_skill_physical_fitness(self):
-        points = self.abs_set['physical_fitness']
+        points = self.abs_data['physical_fitness']
         hp_points = self.lvl * points * 3
         return {
             'battle': None,
@@ -160,7 +161,7 @@ class TrackerTree(ProfessionAbsTreePattern):
         }
 
     def _apply_skill_power_concentration(self):
-        points = self.abs_set['power_concentration']
+        points = self.abs_data['power_concentration']
         mana_bonus = round(-.02 * pow(points, 2) + 2.3 * points + 3.1) * self.eq_stats['intellect'] / 100
         energy = points * 5
         mana = 15 + points * 10 if points < 8 else 85 + points * 5

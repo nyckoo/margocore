@@ -12,7 +12,7 @@ class MageManager(ProfessionManagerPattern):
         self.stats_creation_applier = StatsCreationApplier()
         self.abs_tree = MageTree(lvl, eq_stats, abs_set)
 
-    def load_base_features(self):
+    def _load_base_features(self):
         self.base_stats['strength'] += 19
         self.base_stats['agility'] += 19
         self.base_stats['intellect'] += 57

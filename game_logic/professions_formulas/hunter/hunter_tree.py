@@ -16,9 +16,8 @@ class HunterTree(ProfessionAbsTreePattern):
 
     lvl: int
     eq_stats: dict[str, int]
-    abs_set: dict[str, int]
+    abs_data: dict[str, int]
 
     # get loaded abs & return to features, battle stats
-    # ToDo get_attr skill name for evaluation of matching method?
     def assign_to_stats_and_features(self):
         ...

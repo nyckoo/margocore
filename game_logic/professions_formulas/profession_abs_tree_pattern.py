@@ -21,6 +21,6 @@ class ProfessionAbsTreePattern(ABC):
 
     @property
     @abstractmethod
-    def abs_set(self) -> dict[str, int]:
+    def abs_data(self) -> dict[str, int]:
         raise NotImplementedError("Abilities set field has to be defined!")
 

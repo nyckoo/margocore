@@ -17,5 +17,5 @@ class ProfessionManagerPattern(ABC):
         raise NotImplementedError("Profession field has to be defined!")
 
     @abstractmethod
-    def load_base_features(self) -> None:
+    def _load_base_features(self) -> None:
         pass

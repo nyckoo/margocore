@@ -10,4 +10,4 @@ class MageTree(ProfessionAbsTreePattern):
 
     lvl: int
     eq_stats: dict[str, int]
-    abs_set: dict[str, int]
+    abs_data: dict[str, int]

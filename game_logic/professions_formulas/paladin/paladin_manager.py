@@ -12,7 +12,7 @@ class PaladinManager(ProfessionManagerPattern):
         self.stats_creation_applier = StatsCreationApplier()
         self.abs_tree = PaladinTree(lvl, eq_stats, abs_set)
 
-    def load_base_features(self):
+    def _load_base_features(self):
         self.base_stats['strength'] += 47
         self.base_stats['agility'] += 10
         self.base_stats['intellect'] += 38
