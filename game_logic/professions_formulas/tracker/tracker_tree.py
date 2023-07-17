@@ -33,7 +33,8 @@ class TrackerTree(ProfessionAbsTreePattern):
         return (
             'frost_arrow',
             {
-                'frost_slow_2t': slow,
+                'frost_slow': slow,
+                'turns_duration': 2,
                 'freeze_chance': freeze,
                 'combination_point': 1,
                 'mana_cost': mana
@@ -45,13 +46,14 @@ class TrackerTree(ProfessionAbsTreePattern):
     def _apply_skill_light_arrow(self):
         points = self.abs_data['light_arrow']
         passive_dmg = round(.3 * self.eq_stats['intellect'])
-        light_dmg = (9 + points) / 100
-        armor_break = (13 + points) / 100
+        light_dmg = (9 + points) * .1
+        armor_break = (13 + points) * .1
         mana = 20 + points * 10
         return (
             'light_arrow',
             {
-                'light_dmg_3t': light_dmg,
+                'light_dmg': light_dmg,
+                'turns_duration': 3,
                 'armor_break': armor_break,
                 'combination_point': 1,
                 'mana_cost': mana
@@ -70,7 +72,8 @@ class TrackerTree(ProfessionAbsTreePattern):
         return (
             'fire_arrow',
             {
-                'burn_dmg_2t': burn_dmg,
+                'burn_dmg': burn_dmg,
+                'turns_duration': 2,
                 'extra_fire_dmg': extra_dmg,
                 'dodge_reduction_percent': 5,
                 'combination_point': 1,
