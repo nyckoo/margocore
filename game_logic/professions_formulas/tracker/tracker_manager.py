@@ -16,6 +16,7 @@ class TrackerManager(ProfessionManagerPattern):
 
     def get_upgraded_stats_and_features(self):
         self._load_base_features()
+
         emerging_features = self.stats_creation_applier.load_all_features(
             base_stats=self.base_stats,
             eq_stats=self.tracker_tree.eq_stats
@@ -26,15 +27,15 @@ class TrackerManager(ProfessionManagerPattern):
         )
 
         self.battle_stats = {}
-        abs_data_distributor = self.tracker_tree.create_stats_and_features_generator()
+        abs_data_iterator = self.tracker_tree.create_stats_and_features_generator()
         for _ in range(len(self.tracker_tree.abs_data)):
-            # what if these values are of 'None' type?
-            skill_name, stat_info, feature_info = next(abs_data_distributor)
+            skill_name, stat_info, feature_info = next(abs_data_iterator)
             if stat_info:
                 self.battle_stats[skill_name] = stat_info
-            if feature_info:  # works only for one key:value pair
-                feature_data = next(iter(feature_info))
-                self.full_features[feature_data] += feature_info[feature_data]
+            # max of 3 features for this loop
+            for feature_name, value in feature_info.items():
+                self.full_features[feature_name] += value
+                # self.full_features[feature_name] = self.full_features.get(feature_name, 0) + value
 
     def _load_base_features(self):
         # 1-20 lvl sum of features
