@@ -20,7 +20,6 @@ class TrackerTree(ProfessionAbsTreePattern):
     eq_stats: dict[str, int]
     abs_data: dict[str, int]
 
-    # get loaded abs & return to features, battle stats
     def create_stats_and_features_generator(self) -> Iterator[tuple[str, dict, dict]]:
         for skill_name in self.abs_data.keys():
             yield getattr(self, f"_apply_skill_{skill_name}")()
@@ -133,7 +132,7 @@ class TrackerTree(ProfessionAbsTreePattern):
         return (
             'double_breath',
             {
-                'as_aura': as_aura,
+                'as_aura_percent': as_aura,
                 'turns_duration': 8,
                 'turns_delay': 6,
                 'mana_cost': mana_cost
@@ -168,14 +167,12 @@ class TrackerTree(ProfessionAbsTreePattern):
         )
 
     def _apply_skill_free_dodge(self):
+        # combination point for every dodge passive
         points = self.abs_data['free_dodge']
         dodge_percent = 5 + points
         return (
             'free_dodge',
-            {
-                'combination_point': 1,
-
-            },
+            {},
             {
                 'dodge_percent': dodge_percent
             }
@@ -199,7 +196,7 @@ class TrackerTree(ProfessionAbsTreePattern):
 
     def _apply_skill_crushing_arrow(self):
         points = self.abs_data['crushing_arrow']
-        passive_dmg = round(.2 * self.eq_stats['agility'])
+        passive_dmg = round(.1 * self.eq_stats['agility'])
         faster_turn_chance = 5 + points * .5
         return (
             'crushing_arrow',
@@ -229,12 +226,12 @@ class TrackerTree(ProfessionAbsTreePattern):
 
     def _apply_skill_healing_coolness(self):
         points = self.abs_data['healing_coolness']
-        hp_percent_heal = round((20 + points * 3) * self.eq_stats['health_points'])
+        hp_percent_heal = 20 + points * 3
         mana_cost = 95 + points * 5
         return (
             'healing_coolness',
             {
-                'hp_healing': hp_percent_heal,
+                'hp_healing_percent': hp_percent_heal,
                 'mana_cost': mana_cost
             },
             {}
@@ -242,13 +239,13 @@ class TrackerTree(ProfessionAbsTreePattern):
 
     def _apply_skill_comfortable_outfit(self):
         points = self.abs_data['comfortable_outfit']
-        as_bonus_percent = floor(self.eq_stats['attack_speed'] * points / 100)
+        as_bonus = floor(self.eq_stats['attack_speed'] * points / 100)
         eq_as_reduction_protection_percent = 5 + points * 2
         return (
             'comfortable_outfit',
             {},
             {
-                'eq_attack_speed_bonus_percent': as_bonus_percent,
+                'eq_attack_speed_bonus': as_bonus,
                 'eq_as_reduction_protection_percent': eq_as_reduction_protection_percent
             }
         )
