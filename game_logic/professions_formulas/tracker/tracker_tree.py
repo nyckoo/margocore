@@ -257,7 +257,6 @@ class TrackerTree(ProfessionAbsTreePattern):
         points = self.abs_data['absorption_buff']
         absorption_regeneration_percent = ceil(points / 3)
         absorption_buff_percentage = points * .1
-        eq_as_reduction_protection_percent = points * 5
         range_physical_dmg_absorption = 4 + points
         return (
             'absorption_buff',
@@ -265,7 +264,6 @@ class TrackerTree(ProfessionAbsTreePattern):
                 'attack_absorption_regeneration_percent': absorption_regeneration_percent
             },
             {
-                'eq_as_reduction_protection_percent': eq_as_reduction_protection_percent,
                 'physical_absorption': round(absorption_buff_percentage * self.eq_stats['physical_absorption']),
                 'magical_absorption': round(absorption_buff_percentage * self.eq_stats['magical_absorption']),
                 'range_physical_dmg_absorption': range_physical_dmg_absorption
