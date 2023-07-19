@@ -11,7 +11,7 @@ class HunterTree(ProfessionAbsTreePattern):
         35: ('devastating_wounds', 'beast_seal', 'break_freeing', 'armor_pierce', 'natural_dodge', 'critical_hit'),
         50: ('arrows_hail', 'bandaging_wounds', 'toxic_shock', 'as_agility', 'arrow_retrieval', 'inborn_speed'),
         80: ('critical_buff', 'diamond_arrow', 'cleanse', 'critical_arrow', 'painful_hit', 'survival'),
-        120: ('light_tension', 'dispersion_arrow', 'venom_arrow', 'poisonous_injury', 'core_resistance', 'firm_armor'),
+        120: ('light_tension', 'distracting_arrow', 'venom_arrow', 'poisonous_injury', 'core_resistance', 'firm_armor'),
         170: ('foot_shot', 'insidious_arrow', 'remedy', 'wolf_instinct', 'easy_target', 'power_durability'),
         230: ('wild_zeal', 'destructive_arrows', 'might_source', 'armouring', 'great_health', 'fear')
     }
