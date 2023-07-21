@@ -5,9 +5,28 @@
 
 
 # useful for handling different item types with a single interface
-from itemadapter import ItemAdapter
+import os
+import uuid
+from appwrite.client import Client
+from appwrite.services.databases import Databases
 
 
-class ScrapeModulePipeline:
+class SaveProfileInfoToAppwriteDB:
+    db_id = "64b01ce78dac14ef765b"
+    collection_id = "64b028631d21e546345d"
+
+    def open_spider(self, spider):
+        self.client = Client()\
+            .set_endpoint(os.environ["HOST"])\
+            .set_project(os.environ["APPWRITE_PROJECT_ID"])\
+            .set_key(os.environ["APPWRITE_API_KEY"])
+        self.db = Databases(self.client)
+
     def process_item(self, item, spider):
+        self.db.create_document(
+            database_id=self.db_id,
+            collection_id=self.collection_id,
+            document_id=uuid.uuid1().hex,
+            data=item
+        )
         return item
