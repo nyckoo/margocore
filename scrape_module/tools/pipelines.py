@@ -2,9 +2,6 @@
 #
 # Don't forget to add your pipeline to the ITEM_PIPELINES setting
 # See: https://docs.scrapy.org/en/latest/topics/item-pipeline.html
-
-
-# useful for handling different item types with a single interface
 import os
 import uuid
 from appwrite.client import Client
@@ -13,7 +10,7 @@ from appwrite.services.databases import Databases
 
 class SaveProfileInfoToAppwriteDB:
     db_id = "64b01ce78dac14ef765b"
-    collection_id = "64b028631d21e546345d"
+    collection_id = "64baf7919f817203ebb6"
 
     def open_spider(self, spider):
         self.client = Client()\
