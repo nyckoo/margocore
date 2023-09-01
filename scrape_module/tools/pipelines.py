@@ -4,26 +4,27 @@
 # See: https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 import os
 import uuid
-from appwrite.client import Client
-from appwrite.services.databases import Databases
+from appwrite.client import AppwriteException
+from appwrite_instance import AppwriteInstance
 
 
-class SaveProfileInfoToAppwriteDB:
-    db_id = "64b01ce78dac14ef765b"
+class SaveItemsAppwriteDB:
     collection_id = "64baf7919f817203ebb6"
 
+    def __init__(self):
+        self.appwrite = None
+
     def open_spider(self, spider):
-        self.client = Client()\
-            .set_endpoint(os.environ["HOST"])\
-            .set_project(os.environ["APPWRITE_PROJECT_ID"])\
-            .set_key(os.environ["APPWRITE_API_KEY"])
-        self.db = Databases(self.client)
+        self.appwrite = AppwriteInstance()
 
     def process_item(self, item, spider):
-        self.db.create_document(
-            database_id=self.db_id,
-            collection_id=self.collection_id,
-            document_id=uuid.uuid1().hex,
-            data=item
-        )
+        try:
+            self.appwrite.db.create_document(
+                database_id=self.appwrite.database_id,
+                collection_id=self.collection_id,
+                document_id=uuid.uuid1().hex,
+                data=item
+            )
+        except AppwriteException as e:
+            print(f"CODE: {e.code}, {e.message}")
         return item

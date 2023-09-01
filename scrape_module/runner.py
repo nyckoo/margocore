@@ -10,6 +10,5 @@ if __name__ == "__main__":
     process = CrawlerProcess(crawler_settings)
 
     profile_id = "2309424"
-    profile_spider = ProfileSpider
     process.crawl(ProfileSpider, f"-a profile_id={profile_id}")
     process.start()

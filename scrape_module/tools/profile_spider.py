@@ -38,9 +38,9 @@ class ProfileSpider(scrapy.Spider):
             query_params = f"{world[1:]}/{collection_id}/{char_id}.json"
             url_parametrized = f"{self.garmory_cdn_url}{query_params}"
             self.logger.info(f"URL: '{url_parametrized}'")
-            content_json = requests.get(url_parametrized).json()
+            content_json = requests.get(url_parametrized).json().values()
             tpl_collector = []
-            for item in content_json.values():
+            for item in content_json:
                 if int(item['st']) in range(1, 9):
                     tpl_collector.append(str(item['tpl']))
                     # compose eq with items grabbed from cdn
@@ -65,6 +65,7 @@ class ProfileSpider(scrapy.Spider):
             item_stats = item_data['stat'].split(";")
             stats_dict = dict(stat.split("=") for stat in item_stats if '=' in stat)
             item_lvl = stats_dict.pop('lvl')
+            item_sort = stats_dict.pop('rarity')
             item_profession = stats_dict.pop('reqp', 'mptwbh')
             stats_dict.pop('created', 'created not found')
             stats_dict.pop('tags', 'tags not found')
@@ -73,6 +74,7 @@ class ProfileSpider(scrapy.Spider):
                 'tpl_id': item_data['id'],
                 'name': item_data['name'],
                 'lvl': item_lvl,
+                'sort': item_sort,
                 'profession': item_profession,
                 'accessory_id': item_data['cl'],
                 'stats': json.dumps(obj=stats_dict, ensure_ascii=False),

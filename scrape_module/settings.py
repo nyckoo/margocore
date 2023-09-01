@@ -63,7 +63,7 @@ COOKIES_ENABLED = False
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-   "tools.pipelines.SaveProfileInfoToAppwriteDB": 100,
+   "tools.pipelines.SaveItemsAppwriteDB": 100,
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
