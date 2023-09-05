@@ -18,6 +18,7 @@ Although project is at very early stage, the further plans are:
 ## Technologies &amp; frameworks
 - Python
 - Appwrite
+- Scrapy
 
 ## Contact
 Created by [@nyckoo](https://github.com/nyckoo) - feel free to contact me.
