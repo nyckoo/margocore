@@ -9,7 +9,7 @@ from appwrite_instance import AppwriteInstance
 
 
 class SaveItemsAppwriteDB:
-    collection_id = "64baf7919f817203ebb6"
+    items_collection_id = "64baf7919f817203ebb6"
 
     def __init__(self):
         self.appwrite = None
@@ -21,7 +21,7 @@ class SaveItemsAppwriteDB:
         try:
             self.appwrite.db.create_document(
                 database_id=self.appwrite.database_id,
-                collection_id=self.collection_id,
+                collection_id=self.items_collection_id,
                 document_id=uuid.uuid1().hex,
                 data=item
             )

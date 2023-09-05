@@ -1,6 +1,7 @@
 import json
 import scrapy
 import requests
+from datetime import datetime
 
 from scrape_module.tools.spider_logger_conf import apply_file_logger
 
@@ -34,13 +35,13 @@ class ProfileSpider(scrapy.Spider):
                 continue
             char_id = character.attrib["data-id"]
             world = character.attrib["data-world"]
-            collection_id = int(char_id) % 128
-            query_params = f"{world[1:]}/{collection_id}/{char_id}.json"
+            catalog_id = int(char_id) % 128
+            query_params = f"{world[1:]}/{catalog_id}/{char_id}.json"
             url_parametrized = f"{self.garmory_cdn_url}{query_params}"
             self.logger.info(f"URL: '{url_parametrized}'")
-            content_json = requests.get(url_parametrized).json().values()
+            json_items = requests.get(url_parametrized).json().values()
             tpl_collector = []
-            for item in content_json:
+            for item in json_items:
                 if int(item['st']) in range(1, 9):
                     tpl_collector.append(str(item['tpl']))
                     # compose eq with items grabbed from cdn
@@ -79,5 +80,6 @@ class ProfileSpider(scrapy.Spider):
                 'accessory_id': item_data['cl'],
                 'stats': json.dumps(obj=stats_dict, ensure_ascii=False),
                 'img_source': item_data['icon'],
-                'in_game_source': in_game_source
+                'in_game_source': in_game_source,
+                'updated': str(datetime.utcnow())
             }
