@@ -10,7 +10,7 @@ class ProcessCharactersDataAppwriteDB:
     def __init__(self):
         self.appwrite = AppwriteInstance()
 
-    def extract_and_save_characters_data(self, json_items: dict):
+    def extract_and_parse_characters_data(self, json_items: dict):
         tpl_collector = []
         for item in json_items:
             if int(item['st']) in range(1, 9):

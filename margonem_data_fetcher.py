@@ -3,7 +3,7 @@ import re
 from appwrite_instance import AppwriteInstance
 
 
-class ProcessUserItemsDataAppwriteDB:
+class ProcessItemsDataAppwriteDB:
 
     def __init__(self):
         self.appwrite = AppwriteInstance()
@@ -26,5 +26,5 @@ class ProcessUserItemsDataAppwriteDB:
         regex_pattern = '{\"hid\".*}'
         return re.findall(regex_pattern, response.json()['profile'])
 
-    def extract_and_save_characters_data(self, items_list: list[str]):
+    def extract_and_parse_items_data(self, items_list: list[str]):
         ...
