@@ -1,13 +1,16 @@
 from dataclasses import dataclass, field
+
 from item_builder import Item
+from game_logic.structures.stats_utils import LegendaryBonuses
 
 
 @dataclass
 class Eq:
     items: list[Item] = field(default_factory=lambda: [])
     stats: dict[str, int] = field(default_factory=lambda: {})
-    bonuses: dict[str, int] = field(default_factory=lambda: {})
+    legendary_bonuses_count: dict[str, int] = field(default_factory=lambda: {})
     item_to_bonus: dict[Item.name, str] = field(default_factory=lambda: {})
+    cl_items_configurations = []
 
     def check(self, item: Item, profession: str):
         # Check compatibility of profs with 1st item in eq
@@ -21,33 +24,10 @@ class Eq:
         # Add legendary bonus
         if new_bonus := item.stats['legendary_bonus']:
             self.item_to_bonus[item.name] = new_bonus
-            if new_bonus not in self.bonuses:
-                self.bonuses[new_bonus] = 1
-            else:
-                self.bonuses[new_bonus] += 1
+            bonus_count = self.legendary_bonuses_count.get(new_bonus, 0) + 1
+            self.legendary_bonuses_count[new_bonus] = bonus_count
             del item.stats['legendary_bonus']
         # Add rest of stats
-        for key in item.stats:
-            if key in self.stats:
-                self.stats[key] += item.stats[key]
-            else:
-                self.stats[key] = item.stats[key]
-
-        # ToDo
-        # Remove item under certain condition (the same name for now)
-        # self.remove(item.name)
-        # Check if new item type existed before and erase if so
-
-    def remove(self, name: str):
-        for el in self.items:
-            if el.name == name:
-                self.items.remove(el)
-                bon_to_del = self.item_to_bonus[el.name]
-                self.bonuses[bon_to_del] -= 1
-                if self.bonuses[bon_to_del] == 0:
-                    del self.bonuses[bon_to_del]
-                for key in el.stats:
-                    if key in self.stats:
-                        self.stats[key] -= el.stats[key]
-                    if self.stats[key] == 0:
-                        del self.stats[key]
+        for stat in item.stats:
+            current_stat = self.stats.get(stat, 0)
+            self.stats[stat] += current_stat

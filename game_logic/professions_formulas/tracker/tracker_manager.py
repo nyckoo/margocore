@@ -9,8 +9,8 @@ class TrackerManager(ProfessionManagerPattern):
     battle_stats = None
     full_features = None
 
-    def __init__(self, lvl: int, eq_stats: dict[str, int], abs_set: dict[str, int]):
-        super().__init__(lvl, eq_stats)
+    def __init__(self, lvl: int, eq_stats: dict[str, int], leg_bonuses_count: dict[str, int], abs_set: dict[str, int]):
+        super().__init__(lvl, eq_stats, leg_bonuses_count)
         self.stats_creation_applier = StatsCreationApplier()
         self.tracker_tree = TrackerTree(lvl, eq_stats, abs_set)
 

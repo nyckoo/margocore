@@ -9,8 +9,8 @@ class HunterManager(ProfessionManagerPattern):
     battle_stats = None
     full_features = None
 
-    def __init__(self, lvl: int, eq_stats: dict[str, int], abs_set: dict[str, int]):
-        super().__init__(lvl, eq_stats)
+    def __init__(self, lvl: int, eq_stats: dict[str, int], leg_bonuses_count: dict[str, int], abs_set: dict[str, int]):
+        super().__init__(lvl, eq_stats, leg_bonuses_count)
         self.stats_creation_applier = StatsCreationApplier()
         self.hunter_tree = HunterTree(lvl, eq_stats, abs_set)
     
@@ -34,8 +34,8 @@ class HunterManager(ProfessionManagerPattern):
                 self.battle_stats[skill_name] = stat_info
             # max of 3 features for this loop
             for feature_name, value in feature_info.items():
-                self.full_features[feature_name] += value
-                # self.full_features[feature_name] = self.full_features.get(feature_name, 0) + value
+                current_passive_feature = self.full_features.get(feature_name, 0)
+                self.full_features[feature_name] = current_passive_feature + value
     
     def _load_base_features(self):
         self.base_stats['strength'] += 19

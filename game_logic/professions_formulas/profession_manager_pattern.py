@@ -2,9 +2,10 @@ from abc import ABC, abstractmethod
 
 
 class ProfessionManagerPattern(ABC):
-    def __init__(self, lvl: int, eq: dict[str, int]):
+    def __init__(self, lvl: int, eq: dict[str, int], leg_bonuses_count: dict[str, int]):
         self.lvl = lvl
         self.eq = eq
+        self.leg_bonuses_count = leg_bonuses_count
 
     @property
     @abstractmethod

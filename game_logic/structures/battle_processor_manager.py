@@ -1,26 +1,17 @@
-from dataclasses import dataclass, field
-from stats_utils import AllStats, LegendaryBonuses
-from character_manager import Character
+from dataclasses import dataclass, field, fields
+
+from game_logic.structures.stats_utils import StaticOffStats, StaticDefStats, DynamicOffStats, DynamicDefStats
+from game_logic.professions_formulas.profession_manager_pattern import ProfessionManagerPattern
 
 
 @dataclass
-class FightSimulator:
-    characters: list[Character]
-    # first_team_size: int = 1
+class BattleProcessorManager:
+    characters: tuple[ProfessionManagerPattern]
     _stats_types: list = field(init=False)
     _updated_battle_stats: list = field(init=False)
 
     def __post_init__(self):
-        self._stats_types = field(default_factory=lambda: [self._build_stats_helper(char) for char in self.characters])
-        self._updated_battle_stats = field(default_factory=lambda: [{} for _ in range(len(self.characters))])
-
-    @staticmethod
-    def _build_stats_helper(char: Character):
-        char_leg_bons = {}
-        for bon, power in char.bonuses.items():
-            char_leg_bons[bon] = round(
-                getattr(LegendaryBonuses, bon) * (1 - .5 ** power) / .5)
-        return {**char_leg_bons, **char.get_full_stats()}
+        self._battle_stats_updatetibles = field(default_factory=lambda: [{} for _ in range(len(self.characters))])
 
     # Stats update queue
     # Defensive -> Offensive -> Abilities
@@ -36,12 +27,7 @@ class FightSimulator:
         updatibles = []
         final_stats = []
 
-        # is_fight_on = True
-        # while is_fight_on:
-
-    # 'AllStats.main' is being used inside a method.
     def _prep_pvp_stats(self):
-        assert len(self.characters) == 2
         for i in range(2):
             # Reducing stats by opponents debuffs and lvl leverage
             # Del strength_hp key (if needed)
