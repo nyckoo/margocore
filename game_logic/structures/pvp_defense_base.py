@@ -45,35 +45,31 @@ class DefChangeable:
 
 @dataclass(frozen=True)
 class Defense:
-    params = frozenset({
-        'glare',
-        'cleanse',
-        'resgain',
-        'dodge',
-        'block',
-        'pierce_block',
-        'contra',
-        'lastheal',
-        'poison_resist',
-        'fire_resist',
-        'light_resist',
-        'frost_resist',
-        'armor',
-        'physical_absorb',
-        'magical_absorb',
-        'dmgred',
-        'critred',
-        'energy_subtra',
-        'mana_subtra',
-        'armor_reduction_protection',
-        'energy',
-        'mana',
-        'health_points',
-        'hp_regen',
-        'attack_speed'
-    })
-
-# To be continued..
+    glare: str
+    cleanse: str
+    resgain: str
+    dodge: str
+    block: str
+    pierce_block: str
+    contra: str
+    lastheal: str
+    poison_resist: str
+    fire_resist: str
+    light_resist: str
+    frost_resist: str
+    armor: str
+    physical_absorb: str
+    magical_absorb: str
+    dmgred: str
+    critred: str
+    energy_subtra: str
+    mana_subtra: str
+    armor_reduction_protection: str
+    energy: str
+    mana: str
+    health_points: str
+    hp_regen: str
+    attack_speed: int
 
 
 defence_params_proxy = {

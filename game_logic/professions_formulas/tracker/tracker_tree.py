@@ -1,10 +1,8 @@
-from dataclasses import dataclass
 from math import floor, ceil
 from typing import Iterator
 from game_logic.professions_formulas.profession_abs_tree_pattern import ProfessionAbsTreePattern
 
 
-@dataclass(frozen=True)
 class TrackerTree(ProfessionAbsTreePattern):
     blueprint = {
         25: ('frost_arrow', 'fire_arrow', 'light_arrow', 'double_arrow', 'power_concentration', 'physical_fitness'),
@@ -16,9 +14,8 @@ class TrackerTree(ProfessionAbsTreePattern):
         230: ('mystical_arrow', 'fear', 'great_health', 'extra_armor', 'might_source', 'items_enchantment')
     }
 
-    lvl: int
-    eq_stats: dict[str, int]
-    abs_data: dict[str, int]
+    def __init__(self, lvl: int, eq_stats: dict[str, int], abs_data: dict[str, int]):
+        super().__init__(lvl, eq_stats, abs_data)
 
     def create_stats_and_features_generator(self) -> Iterator[tuple[str, dict, dict]]:
         for skill_name in self.abs_data.keys():

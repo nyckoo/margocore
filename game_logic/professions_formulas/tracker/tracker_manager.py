@@ -9,23 +9,25 @@ class TrackerManager(ProfessionManagerPattern):
     battle_stats = None
     full_features = None
 
-    def __init__(self, lvl: int, eq_stats: dict[str, int], leg_bonuses_count: dict[str, int], abs_set: dict[str, int]):
+    def __init__(self, lvl: int, eq_stats: dict[str, int], leg_bonuses_count: dict[str, int], abs_data: dict[str, int]):
         super().__init__(lvl, eq_stats, leg_bonuses_count)
         self.stats_creation_applier = StatsCreationApplier()
-        self.tracker_tree = TrackerTree(lvl, eq_stats, abs_set)
-
-    def get_upgraded_stats_and_features(self):
         self._load_base_features()
-
         emerging_features = self.stats_creation_applier.load_all_features(
             base_stats=self.base_stats,
-            eq_stats=self.tracker_tree.eq_stats
+            eq_stats=self.eq_stats
         )
         self.full_features = self.stats_creation_applier.load_features_compounded_stats(
             summed_stats=emerging_features,
-            lvl=self.tracker_tree.lvl
+            lvl=self.lvl
         )
+        self.full_features = {
+            **self.full_features,
+            **self.stats_creation_applier.convert_legendary_bonuses(self.leg_bonuses_count)
+        }
+        self.tracker_tree = TrackerTree(lvl, self.full_features, abs_data)
 
+    def load_abs_tree_functionality(self):
         self.battle_stats = {}
         abs_data_iterator = self.tracker_tree.create_stats_and_features_generator()
         for _ in range(len(self.tracker_tree.abs_data)):
@@ -34,8 +36,8 @@ class TrackerManager(ProfessionManagerPattern):
                 self.battle_stats[skill_name] = stat_info
             # max of 3 features for this loop
             for feature_name, value in feature_info.items():
-                self.full_features[feature_name] += value
-                # self.full_features[feature_name] = self.full_features.get(feature_name, 0) + value
+                current_passive_feature = self.full_features.get(feature_name, 0)
+                self.full_features[feature_name] = current_passive_feature + value
 
     def _load_base_features(self):
         # 1-20 lvl sum of features

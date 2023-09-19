@@ -1,5 +1,4 @@
 from dataclasses import dataclass
-# [Offensive, Defensive], [Static, Dynamic]
 
 
 @dataclass(frozen=True)
@@ -81,6 +80,11 @@ class AllStats(StaticOffStats, DynamicOffStats, StaticDefStats, DynamicDefStats)
     frost_slow: int
     poison_slow: int
     wound_chance: int
+    upgrade_lvl: int  # stacking in eg.add
+    lvl: int  # stacking in eg.add
+    rarity: str
+    enchant_bonus: str
+    reqp: str
     legendary_bonus: str
 
 

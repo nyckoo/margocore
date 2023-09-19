@@ -9,23 +9,25 @@ class HunterManager(ProfessionManagerPattern):
     battle_stats = None
     full_features = None
 
-    def __init__(self, lvl: int, eq_stats: dict[str, int], leg_bonuses_count: dict[str, int], abs_set: dict[str, int]):
+    def __init__(self, lvl: int, eq_stats: dict[str, int], leg_bonuses_count: dict[str, int], abs_data: dict[str, int]):
         super().__init__(lvl, eq_stats, leg_bonuses_count)
         self.stats_creation_applier = StatsCreationApplier()
-        self.hunter_tree = HunterTree(lvl, eq_stats, abs_set)
-    
-    def get_upgraded_stats_and_features(self):
         self._load_base_features()
-
         emerging_features = self.stats_creation_applier.load_all_features(
             base_stats=self.base_stats,
-            eq_stats=self.hunter_tree.eq_stats
+            eq_stats=self.eq_stats
         )
         self.full_features = self.stats_creation_applier.load_features_compounded_stats(
             summed_stats=emerging_features,
-            lvl=self.hunter_tree.lvl
+            lvl=self.lvl
         )
-
+        self.full_features = {
+            **self.full_features,
+            **self.stats_creation_applier.convert_legendary_bonuses(self.leg_bonuses_count)
+        }
+        self.hunter_tree = HunterTree(lvl, self.full_features, abs_data)
+    
+    def load_abs_tree_functionality(self):
         self.battle_stats = {}
         abs_data_iterator = self.hunter_tree.create_stats_and_features_generator()
         for _ in range(len(self.hunter_tree.abs_data)):

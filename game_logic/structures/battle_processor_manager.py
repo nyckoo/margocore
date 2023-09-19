@@ -1,17 +1,17 @@
 from dataclasses import dataclass, field, fields
 
-from game_logic.structures.stats_utils import StaticOffStats, StaticDefStats, DynamicOffStats, DynamicDefStats
+from game_logic.structures.pvp_defense_base import Defense
+from game_logic.structures.pvp_offense_base import Offense
 from game_logic.professions_formulas.profession_manager_pattern import ProfessionManagerPattern
 
 
 @dataclass
 class BattleProcessorManager:
     characters: tuple[ProfessionManagerPattern]
-    _stats_types: list = field(init=False)
-    _updated_battle_stats: list = field(init=False)
-
-    def __post_init__(self):
-        self._battle_stats_updatetibles = field(default_factory=lambda: [{} for _ in range(len(self.characters))])
+    _turn_effects_store: dict = field(default_factory=lambda: {
+        'off': {},
+        'def': {}
+    })
 
     # Stats update queue
     # Defensive -> Offensive -> Abilities

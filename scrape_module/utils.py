@@ -9,6 +9,7 @@ class ScrapeItemStatsMapper:
     dz: str = 'agility'
     di: str = 'intellect'
     crit: str = 'crit'
+    lvl: str = 'lvl'  # repetition in stats
     critval: str = 'physical_crit'
     critmval: str = 'magical_crit'
     energybon: str = 'energy'
@@ -55,6 +56,8 @@ class ScrapeItemStatsMapper:
     bonus: str = 'enchant_bonus'
     enhancement_upgrade_lvl: str = 'upgrade_lvl'
     low_req: str = 'low_req'
+    rarity: str = 'rarity'
+    reqp: str = 'reqp'
 
 
 # Items' types for all 6 game professions (classes):
