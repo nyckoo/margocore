@@ -16,8 +16,7 @@ class MageManager(ProfessionManagerPattern):
         self.base_stats['strength'] += 19
         self.base_stats['agility'] += 19
         self.base_stats['intellect'] += 57
-        for _ in range(21, self.lvl + 1):
-            self.base_stats['intellect'] += 5
+        self.base_stats['intellect'] += (self.lvl - 20) * 5
 
     def get_tree_abilities(self):
         pass

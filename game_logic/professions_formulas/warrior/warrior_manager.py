@@ -15,8 +15,7 @@ class WarriorManager(ProfessionManagerPattern):
     def _load_base_features(self):
         self.base_stats['strength'] += 76
         self.base_stats['agility'] += 19
-        for _ in range(21, self.lvl + 1):
-            self.base_stats['strength'] += 5
+        self.base_stats['strength'] += (self.lvl - 20) * 5
 
     def get_tree_abilities(self):
         pass

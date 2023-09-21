@@ -26,6 +26,7 @@ class TrackerManager(ProfessionManagerPattern):
             **self.stats_creation_applier.convert_legendary_bonuses(self.leg_bonuses_count)
         }
         self.tracker_tree = TrackerTree(lvl, self.full_features, abs_data)
+        del self.stats_creation_applier
 
     def load_abs_tree_functionality(self):
         self.battle_stats = {}
@@ -44,10 +45,10 @@ class TrackerManager(ProfessionManagerPattern):
         self.base_stats['strength'] += 19
         self.base_stats['agility'] += 38
         self.base_stats['intellect'] += 38
-        for i in range(21, self.lvl + 1):
-            if i % 2 == 0:
-                self.base_stats['agility'] += 2
-                self.base_stats['intellect'] += 3
-            else:
-                self.base_stats['agility'] += 3
-                self.base_stats['intellect'] += 2
+        if self.lvl % 2 == 0:
+            self.base_stats['agility'] += int((self.lvl - 20) / 2) * 5
+            self.base_stats['intellect'] += int((self.lvl - 20) / 2) * 5
+        else:
+            self.base_stats['agility'] += int((self.lvl - 21) / 2) * 5 + 3
+            self.base_stats['intellect'] += int((self.lvl - 21) / 2) * 5 + 2
+        return self.base_stats

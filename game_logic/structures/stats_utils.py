@@ -6,7 +6,7 @@ class LegendaryBonuses:
     verycrit: int = 13
     critred: int = 20
     lastheal: int = 40  # +-10%, activated when max_hp < 18%
-    holytouch: int = 7  # 0.06 max_hp x3
+    holytouch: int = 7  # 0.06 max_hp x3 (floor)
     curse: int = 9
     glare: int = 9
     cleanse: int = 12
@@ -80,8 +80,8 @@ class AllStats(StaticOffStats, DynamicOffStats, StaticDefStats, DynamicDefStats)
     frost_slow: int
     poison_slow: int
     wound_chance: int
-    upgrade_lvl: int  # stacking in eg.add
-    lvl: int  # stacking in eg.add
+    upgrade_lvl: int  # stacking in eq.add method
+    lvl: int  # stacking in eq.add method
     rarity: str
     enchant_bonus: str
     reqp: str

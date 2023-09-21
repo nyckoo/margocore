@@ -16,13 +16,12 @@ class PaladinManager(ProfessionManagerPattern):
         self.base_stats['strength'] += 47
         self.base_stats['agility'] += 10
         self.base_stats['intellect'] += 38
-        for i in range(21, self.lvl + 1):
-            if i % 2 == 0:
-                self.base_stats['strength'] += 2
-                self.base_stats['intellect'] += 3
-            else:
-                self.base_stats['strength'] += 3
-                self.base_stats['intellect'] += 2
+        if self.lvl % 2 == 0:
+            self.base_stats['strength'] += int((self.lvl-20) / 2) * 5
+            self.base_stats['intellect'] += int((self.lvl-20) / 2) * 5
+        else:
+            self.base_stats['strength'] += int((self.lvl - 21) / 2) * 5 + 3
+            self.base_stats['intellect'] += int((self.lvl - 21) / 2) * 5 + 2
 
     def get_tree_abilities(self):
         pass

@@ -17,6 +17,16 @@ class ProfessionManagerPattern(ABC):
     def profession(self) -> str:
         raise NotImplementedError("Profession field has to be defined!")
 
+    @property
+    @abstractmethod
+    def battle_stats(self) -> dict[str, int]:
+        raise NotImplementedError("Battle stats field has to be defined!")
+
+    @property
+    @abstractmethod
+    def full_features(self) -> dict[str, int]:
+        raise NotImplementedError("Full features field has to be defined!")
+
     @abstractmethod
     def _load_base_features(self) -> None:
         raise NotImplementedError("Base features have to be included!")

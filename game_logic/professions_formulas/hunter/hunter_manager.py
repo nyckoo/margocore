@@ -26,6 +26,7 @@ class HunterManager(ProfessionManagerPattern):
             **self.stats_creation_applier.convert_legendary_bonuses(self.leg_bonuses_count)
         }
         self.hunter_tree = HunterTree(lvl, self.full_features, abs_data)
+        del self.stats_creation_applier
     
     def load_abs_tree_functionality(self):
         self.battle_stats = {}
@@ -42,5 +43,4 @@ class HunterManager(ProfessionManagerPattern):
     def _load_base_features(self):
         self.base_stats['strength'] += 19
         self.base_stats['agility'] += 76
-        for _ in range(21, self.lvl + 1):
-            self.base_stats['agility'] += 5
+        self.base_stats['agility'] += (self.lvl - 20) * 5
