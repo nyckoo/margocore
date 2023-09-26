@@ -9,6 +9,7 @@ class ScrapeItemStatsMapper:
     dz: str = 'agility'
     di: str = 'intellect'
     crit: str = 'crit'
+    lvl: str = 'lvl'  # repetition in stats
     critval: str = 'physical_crit'
     critmval: str = 'magical_crit'
     energybon: str = 'energy'
@@ -26,7 +27,7 @@ class ScrapeItemStatsMapper:
     lowevade: str = 'dodge_reduction'
     lowcrit: str = 'crit_reduction'
     dmg: str = 'physical_dmg'
-    pdmg: str = 'physical_dmg'  # arrows
+    pdmg: str = 'physical_dmg_single'
     fire: str = 'fire_dmg'
     light: str = 'light_dmg'
     frost: str = 'frost_dmg'
@@ -37,7 +38,6 @@ class ScrapeItemStatsMapper:
     resfrost: str = 'frost_resist'
     pierce: str = 'armor_pierce'
     lowcritallval: str = 'crit_power_reduction'
-    lowheal2turns: str = 'hp_regen_reduction_2t'
     resacdmg: str = 'armor_reduction_protection'
     resmanaendest: str = 'mana_energy_subtra_protection'
     ac: str = 'armor'
@@ -55,6 +55,8 @@ class ScrapeItemStatsMapper:
     bonus: str = 'enchant_bonus'
     enhancement_upgrade_lvl: str = 'upgrade_lvl'
     low_req: str = 'low_req'
+    rarity: str = 'rarity'
+    reqp: str = 'reqp'
 
 
 # Items' types for all 6 game professions (classes):
