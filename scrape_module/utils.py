@@ -27,7 +27,7 @@ class ScrapeItemStatsMapper:
     lowevade: str = 'dodge_reduction'
     lowcrit: str = 'crit_reduction'
     dmg: str = 'physical_dmg'
-    pdmg: str = 'physical_dmg'  # arrows
+    pdmg: str = 'physical_dmg_single'
     fire: str = 'fire_dmg'
     light: str = 'light_dmg'
     frost: str = 'frost_dmg'
@@ -38,7 +38,6 @@ class ScrapeItemStatsMapper:
     resfrost: str = 'frost_resist'
     pierce: str = 'armor_pierce'
     lowcritallval: str = 'crit_power_reduction'
-    lowheal2turns: str = 'hp_regen_reduction_2t'
     resacdmg: str = 'armor_reduction_protection'
     resmanaendest: str = 'mana_energy_subtra_protection'
     ac: str = 'armor'

@@ -35,14 +35,14 @@ class DynamicOffStats:
     armor_reduction: int  # works when hit successful
     absorb_reduction: int  # works when hit successful
     attack_speed: int
-    physical_dmg: (tuple, int)  # (lowest, highest) / constant
+    physical_dmg: tuple  # (lowest, highest) in weapons
+    physical_dmg_single: tuple  # TWEAK (one value) in arrows, quivers
     fire_dmg: int  # originally boundaries
-    light_dmg: int  # originally boundaries
+    light_dmg: tuple  # originally boundaries
     frost_dmg: tuple  # (slow, dmg)
     armor_pierce: int
     poison_dmg: tuple  # (slow, dmg)
     wound_dmg: tuple  # (chance, dmg)
-    hp_regen_reduction_2t: int  # works after first successful hit for 2 turns
 
 
 @dataclass(frozen=True)
@@ -83,6 +83,7 @@ class AllStats(StaticOffStats, DynamicOffStats, StaticDefStats, DynamicDefStats)
     upgrade_lvl: int  # stacking in eq.add method
     lvl: int  # stacking in eq.add method
     rarity: str
+    low_req: str
     enchant_bonus: str
     reqp: str
     legendary_bonus: str
@@ -98,7 +99,6 @@ class CounterStats:
     resist_reduction: int  # works when hit successful
     armor_reduction: int  # works when hit successful
     absorb_reduction: int  # works when hit successful
-    hp_regen_reduction_2t: int  # works after first successful hit for 2 turns
     energy_subtra: int
     mana_subtra: int
     mana_energy_subtra_protection: int

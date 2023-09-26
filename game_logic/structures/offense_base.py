@@ -1,8 +1,5 @@
 from dataclasses import dataclass
 
-# attack params applicable for each profession for pvp, might be loaded dynamically
-# based on toa_stats & eq
-
 
 @dataclass
 class AttackTypes:
@@ -34,8 +31,6 @@ class OffReducable:
     resist_reduction: str  # works when hit successful
     armor_reduction: str  # works when hit successful
     absorb_reduction: str  # works when hit successful
-    hp_regen_reduction: str
-    hp_regen_reduction_2t: str
     mana_energy_subtra_protection: str
 
 
@@ -70,39 +65,3 @@ class Offense:
     hp_regen_reduction_2t: str
     mana_energy_subtra_protection: str
     attack_speed: int
-
-
-attack_params_proxy = {
-    'chanceable': {
-        'crit',  # rename to 'crit'
-        'verycrit',
-        'holytouch',
-        'curse',
-        'armor_pierce',
-        'wound_chance'
-    },
-    'attack_types': {
-        'physical_dmg',
-        'fire_dmg',  # originally boundaries
-        'light_dmg',  # originally boundaries
-        'frost_dmg',
-        'poison_dmg',
-        'wound_dmg',
-        'physical_crit',
-        'magical_crit'
-    },
-    'reducable': {
-        'frost_slow',
-        'poison_slow',
-        'as_reduction',  # works once after first successful hit
-        'resist_reduction',  # works when hit successful
-        'armor_reduction',  # works when hit successful
-        'absorb_reduction',  # works when hit successful
-        'hp_regen_reduction',
-        'hp_regen_reduction_2t',
-        'mana_energy_subtra_protection'
-    },
-    'changeable': {
-        'attack_speed'
-    }
-}

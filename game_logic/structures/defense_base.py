@@ -1,8 +1,5 @@
 from dataclasses import dataclass
 
-# defence params applicable for each profession for pvp, might be loaded dynamically
-# based on toa_stats & eq
-
 
 @dataclass
 class DefChanceable:
@@ -26,6 +23,7 @@ class DefApplicable:
     physical_absorb: str
     magical_absorb: str
 
+
 @dataclass
 class DefReducable:
     dmgred: str
@@ -33,6 +31,8 @@ class DefReducable:
     energy_subtra: str
     mana_subtra: str
     armor_reduction_protection: str
+    hp_regen_reduction: str
+
 
 @dataclass
 class DefChangeable:
@@ -70,40 +70,3 @@ class Defense:
     health_points: str
     hp_regen: str
     attack_speed: int
-
-
-defence_params_proxy = {
-    'chanceable': {
-        'glare',
-        'cleanse',
-        'resgain',
-        'dodge',
-        'block',
-        'pierce_block',
-        'contra'
-    },
-    'applicable': {
-        'lastheal',  # +-10%, activated when max_hp < 18%
-        'poison_resist',
-        'fire_resist',
-        'light_resist',
-        'frost_resist',
-        'armor',
-        'physical_absorb',
-        'magical_absorb'
-    },
-    'reducable': {
-        'dmgred',
-        'critred',
-        'energy_subtra',
-        'mana_subtra',
-        'armor_reduction_protection'
-    },
-    'changeable': {
-        'attack_speed',
-        'energy',
-        'mana',
-        'health_points',
-        'hp_regen'
-    }
-}
